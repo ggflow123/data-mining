@@ -1,11 +1,14 @@
 # data-mining
 This is  for 2018 fall semester cs241 final project: Data Mining
 
-## data formating
+## convertDiscrete.py
+- This program handle the raw data to discrete data
 ### The format of edited discrete data
 - The sequence is the same as the raw data, with the value need to test at the end of each line of data.
 - There are 14 attributes in total.
 - They are saved in the adult_edit.csv
-### The format of data in knn.c
-- Using the two dimensional array train_d to save the training_examples.
-- train_d[14] is the value for each line of data, others are attributes
+- The 15th value in the data file is the function value
+## knn.c
+- This program use K-nearest-neighbors algs to find the value of a query.
+- For the K-d tree to find nearest neighbors, we use the code from https://github.com/jtsiomb/kdtree
+ 
