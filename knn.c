@@ -5,18 +5,34 @@
 #include<stdio.h>
 #include"kdtree.h"
 #define VAR_SIZE 14
+void class_alg(void *kd,float q[],int k);
 
-//void class_alg(int query[]);
-
-int main(){
-    void *kd = kd_create(VAR_SIZE);// create a kd-tree
-    // need to write as vars to take in !!!!!!
-    int data_size=40000;
-    int *f_x=malloc(sizeof(int)*data_size);
-    //int *train_d=(int *)malloc(sizeof(int*)*VAR_SIZE*data_size);
-    // deal with input data from stdin(add each training example to train_d)
+int main(int argc, char **argv){
     int i;
     int j;
+    // deal with user input
+    int data_size;// the size of total input data
+    float *q=(float *)malloc(sizeof(float)*VAR_SIZE);
+    int k;// the nearest k neighbors
+    if(argc!=4){
+	printf("Invalid Input");
+	exit(1);
+    }
+    else{
+	data_size=atoi(argv[1]);
+	for(j=0;j<VAR_SIZE;j++){
+	    int temp;
+	    sscanf(argv[2],"%d, ",&temp);
+	    q[j]=temp*1.0;
+	}
+	k=atoi(argv[3]);
+    }
+
+    void *kd = kd_create(VAR_SIZE);// create a kd-tree
+    int *f_x=malloc(sizeof(int)*data_size);// create an array of function value
+    //int *train_d=(int *)malloc(sizeof(int*)*VAR_SIZE*data_size);
+
+    // deal with input data from stdin(add each training example to train_d
     float *line[data_size];
     for(i=0;i<data_size;i++){
 	line[i]=(float *)malloc(sizeof(float)*VAR_SIZE);
@@ -28,16 +44,27 @@ int main(){
 	    *(line[i]+j)=temp*1.0;
 	    //printf("%f ", *(line[i]+j));
 	}
-	scanf("%d, ",f_x+i);
+	scanf("%d,",f_x+i);
 	kd_insertf(kd,line[i],f_x+i);
     }
 
     // deal with queries
 
-    float q[VAR_SIZE]={33,6,83311,9,13,2,4,0,4,1,0,0,13,39};
+    class_alg(kd,q,k);
 
+    //free all kinds of stuff
+    for(i=0;i<data_size;i++){
+	free(line[i]);
+    }
+    free(f_x);
+    kd_free(kd);
+    free(q);
+
+}
+
+void class_alg(void* kd,float q[],int k){
     void *result;
-    result=kd_nearest_rangef(kd,q,1000.0);
+    result=kd_nearest_rangef(kd,q,k*1.0);
     int c0=0;
     int c1=0;
     if(kd_res_size(result)>0){
@@ -60,16 +87,5 @@ int main(){
     else{
 	printf("1\n");
     }
-    //class_alg(query);
-
-    //free all kinds of stuff
-    for(i=0;i<data_size;i++){
-	free(line[i]);
-    }
-    free(f_x);
     kd_res_free(result);
-    kd_free(kd);
-
 }
-
-//void class_alg(int query[]);

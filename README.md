@@ -12,7 +12,10 @@ This is  for 2018 fall semester cs241 final project: Data Mining
 - This program use K-nearest-neighbors algs to find the value of a query.
 - For the K-d tree to find nearest neighbors, we use the code from https://github.com/jtsiomb/kdtree
 - We read the discrete data from stdin.
+### how to use it
+-  input the data from stdin
+- ./knn <the total number of data> <query> <nearest k value> < <input_data>
+- the format of query: <value,value,...,value>
 ### NEED further modification about
-- read variables from user input(number of data, query, nearest k value, etc.)
 - change k from radius of searching scope to "nearest k points"
-
+- maybe should read more than one query from a file in future
