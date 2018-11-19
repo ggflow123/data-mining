@@ -14,7 +14,7 @@ This is  for 2018 fall semester cs241 final project: Data Mining
 - We read the discrete data from stdin.
 ### how to use it
 -  input the data from stdin
-- ./knn <the total number of data> <query> <nearest k value> < <input_data>
+- ./knn "the total number of data" "query" "nearest k value" < "input_data"
 - the format of query: <value,value,...,value>
 ### NEED further modification about
 - change k from radius of searching scope to "nearest k points"
