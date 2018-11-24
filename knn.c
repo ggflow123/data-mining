@@ -3,7 +3,6 @@
 // Nov 17 2018
 #include<stdlib.h>
 #include<stdio.h>
-#include"kdtree.h"
 #define VAR_SIZE 14
 void class_alg(void *kd,float q[],int k);
 
@@ -28,7 +27,6 @@ int main(int argc, char **argv){
 	k=atoi(argv[3]);
     }
 
-    void *kd = kd_create(VAR_SIZE);// create a kd-tree
     int *f_x=malloc(sizeof(int)*data_size);// create an array of function value
     //int *train_d=(int *)malloc(sizeof(int*)*VAR_SIZE*data_size);
 
@@ -45,26 +43,22 @@ int main(int argc, char **argv){
 	    //printf("%f ", *(line[i]+j));
 	}
 	scanf("%d,",f_x+i);
-	kd_insertf(kd,line[i],f_x+i);
     }
 
     // deal with queries
 
-    class_alg(kd,q,k);
+    class_alg(q,k);
 
     //free all kinds of stuff
     for(i=0;i<data_size;i++){
 	free(line[i]);
     }
     free(f_x);
-    kd_free(kd);
     free(q);
 
 }
 
-void class_alg(void* kd,float q[],int k){
-    void *result;
-    result=kd_nearest_rangef(kd,q,k*1.0);
+void class_alg(float q[],int k){
     int c0=0;
     int c1=0;
     if(kd_res_size(result)>0){
