@@ -4,14 +4,14 @@
 #include<stdlib.h>
 #include<stdio.h>
 #define VAR_SIZE 14
-void class_alg(void *kd,float q[],int k);
+void class_alg(int q[],int k);
 
 int main(int argc, char **argv){
     int i;
     int j;
     // deal with user input
     int data_size;// the size of total input data
-    float *q=(float *)malloc(sizeof(float)*VAR_SIZE);
+    int *q=(int *)malloc(sizeof(int)*VAR_SIZE);
     int k;// the nearest k neighbors
     if(argc!=4){
 	printf("Invalid Input");
@@ -31,15 +31,15 @@ int main(int argc, char **argv){
     //int *train_d=(int *)malloc(sizeof(int*)*VAR_SIZE*data_size);
 
     // deal with input data from stdin(add each training example to train_d
-    float *line[data_size];
+    int *line[data_size];
     for(i=0;i<data_size;i++){
-	line[i]=(float *)malloc(sizeof(float)*VAR_SIZE);
+	line[i]=(int *)malloc(sizeof(int)*VAR_SIZE);
     }
     for(i=0;i<data_size;i++){
 	for(j=0;j<VAR_SIZE;j++){
 	    int temp;
 	    scanf("%d, ",&temp);
-	    *(line[i]+j)=temp*1.0;
+	    *(line[i]+j)=temp;
 	    //printf("%f ", *(line[i]+j));
 	}
 	scanf("%d,",f_x+i);
@@ -58,28 +58,31 @@ int main(int argc, char **argv){
 
 }
 
-void class_alg(float q[],int k){
-    int c0=0;
-    int c1=0;
-    if(kd_res_size(result)>0){
-	printf("%d\n",kd_res_size(result));
-	while(!kd_res_end(result)){
-	    float *pos=malloc(sizeof(float)*VAR_SIZE);
-	    int *pch = kd_res_itemf(result,pos);
-	    if(*pch==0){
-		c0++;
+void class_alg(int q[],int k){
+    int c0=0;// count the number of neighbors that has a value of 0
+    int c1=0;// count the numbef of neighbors that has a value of 1
+    int *nei=malloc(sizeof(int)*k);// save the nearest k neighbors
+    int i;
+    for(i=0;i<k;i++){
+	int j;
+	int min_d=d(0);// the minimum distance
+	int last_dist=0;// the last minimum distance
+	for(j=0;j<data_size;j++){
+	    int dist;
+	    if(dist<min_d&&dist>=last_dis){
+		last_dis=min_d;
+		min_d=dist;
 	    }
-	    else{
-		c1++;
-	    }
-	    kd_res_next(result);
 	}
     }
+
     if(c0>c1){
 	printf("0\n");
     }
     else{
 	printf("1\n");
     }
-    kd_res_free(result);
+}
+
+double d(int q1[], int q2[]){// this function calculate the distance between two points
 }
