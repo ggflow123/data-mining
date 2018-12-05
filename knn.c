@@ -6,8 +6,9 @@
 #define VAR_SIZE 14
 int train_data_s;// the size of total input train data
 int test_data_s;// the size of total test data
+int class_alg(int q[],int k,int **train_d, int *f_train);
+int d(int q1[],int q2[]);
 
-//void class_alg(int q[],int k,*int train_data[]);
 
 int main(int argc, char **argv){
     int i;
@@ -61,6 +62,7 @@ int main(int argc, char **argv){
 
 
 
+
     // deal with train data    
     for(i=0;i<train_data_s;i++){
 	for(j=0;j<VAR_SIZE;j++){
@@ -68,8 +70,10 @@ int main(int argc, char **argv){
 	    //printf("%d ", *(train_d[i]+j));
 	}
 	fscanf(ftr,"%d",f_train+i);
-	//printf("xxxxxxx%d\n",*(f_train+i));
+	//printf("x%d\n",*(f_train+i));
     }
+
+
 
 
     // deal with test data
@@ -79,13 +83,24 @@ int main(int argc, char **argv){
 	    //printf("%d ", *(test_d[i]+j));
 	}
 	fscanf(fte,"%d",f_test+i);
-	//printf("xxxxx%d\n",*(f_test+i));
+	//printf("x%d\n",*(f_test+i));
     }
 
 
-    // deal with queries
 
-    /*class_alg(q,k);*/
+
+
+    int right=0;// record how many data in test dataset has the same value as using the training dataset
+    // deal with queries
+    for(i=0;i<test_data_s;i++){
+	int train_r=class_alg(test_d[i], k, train_d, f_train);
+	//printf("%d\n", train_r);
+	if(train_r==f_test[i]){
+	    right++;
+	}
+    }
+    printf("%f",(double)right/test_data_s);
+
 
     //free all kinds of stuff
     for(i=0;i<train_data_s;i++){
@@ -98,44 +113,68 @@ int main(int argc, char **argv){
     free(f_test);
 
 }
-/*
-void class_alg(int q[],int k,*int train_data[]){
+
+
+int class_alg(int q[],int k,int **train_d, int *f_train){
     int c0=0;// count the number of neighbors that has a value of 0
     int c1=0;// count the numbef of neighbors that has a value of 1
-    int *nei=malloc(sizeof(int)*k);// save the nearest k neighbors
+    int *nei=malloc(sizeof(int)*k);// save the index of nearest k neighbors
     int i;
+    int j;
     int last_dist=0;// the last minimum distance
+    // find the smallest distance
     for(i=0;i<k;i++){
-	int j;
 	int min_d;
-	if(i=0){
-	    min_d=d(0);
-	}
-	else{
-	    min_d=last_dist;// the minimum distance
-	}
-	for(j=0;j<data_size;j++){
-	    int dist;
-	    if(dist<=min_d){
-		min_d=dist;
+	int index=0;
+	min_d=last_dist;// the minimum distance
+	for(j=0;j<train_data_s;j++){
+	    int dist=d(q,train_d[j]);
+	    if(dist>last_dist){
+		if(dist<=min_d){
+		    min_d=dist;
+		    index=j;
+		}
+	    }
+	    if(dist==last_dist){// check if we have already add it into nei
+		int x;
+		int isre=0;
+		for(x=0;x<k;x++){
+		    if(nei[x]==j){
+			isre=1;
+		    }
+		}
+		if(isre==0){
+		    index=j;
+		}
 	    }
 	}
-	add min_d to nei;
+	nei[i]=index;
+    }
+
+    for(i=0;i<k;i++){
+	if(f_train[i]==0){
+	    c0++;
+	}
+	else{
+	    c1++;
 	}
     }
 
-    for all element in nei, if is 0, co++,else c1++.
-
-
     if(c0>c1){
-	printf("0\n");
+	return 0;
     }
     else{
-	printf("1\n");
+	return 1;
     }
 }
 
-double d(int q1[], int q2[]){// this function calculate the distance between two points
+
+int d(int q1[], int q2[]){// this function calculate the distance between two points
+    int i;
+    int sum=0;
+    for(i=0;i<VAR_SIZE;i++){
+	sum=sum+(q1[i]-q2[i])*(q1[i]-q2[i]);
+    }
+    return sum;
 }
 
-*/
