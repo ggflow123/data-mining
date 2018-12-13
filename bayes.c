@@ -7,6 +7,28 @@
 int train_data_s;// the size of total input train data
 int test_data_s;// the size of total test data
 
+double mean_value_1(int c, int train_data_s, int **train_d, int *f_train)
+{
+	int mean_1[train_data_s];
+	int count = 0;
+	int s = 0;
+
+	while(int i = 0; i < train_data_s; i++){
+		if(f_train[i] == 0)
+		{
+		mean_1[count] == train_data_s[i][c];
+		count++;
+		}
+	}
+
+	int s = count + 1;
+	int sum = 0;
+	while(int i = 0; i < s; i++){
+	sum = sum + mean_1[i];
+	}
+	return (double) mean/s;
+
+}
 
 int main(int argc, char **argv){
     int i;
@@ -85,7 +107,9 @@ int main(int argc, char **argv){
     }
 
 
-
+    double mean = 0;
+    mean = mean_value_1(1, train_data_s, train_d, f_train);
+    printf("mean: %f\n", mean);
 
 
     int right=0;// record how many data in test dataset has the same value as using the training dataset
