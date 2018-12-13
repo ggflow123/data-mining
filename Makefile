@@ -1,14 +1,14 @@
-all: knn.o kdtree.o
-	gccx -o knn knn.o kdtree.o
+#Makefile
 
-knn: knn.o kdtree.o
-	gccx -o knn knn.o kdtree.o
+TARGETS=knn bayes
 
-knn.o: knn.c
-	gccx -c knn.c    
+all: $(TARGETS)
 
-kdtree.o: kdtree.c
-	gccx -c kdtree.c
+knn: knn.c
+	gccx -o knn knn.c
 
-clean: kdtree.o knn.o knn
-	rm kdtree.o knn.o knn
+bayes: bayes.c
+	gccx -o bayes bayes.c    
+
+clean:
+	rm -f *.o $(TARGETS) *~
