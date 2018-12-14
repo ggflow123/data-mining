@@ -1,34 +1,14 @@
-// This program implements naive algs
-// Xuran Wang & Yuanzhe Liu
+// This program implements k-nearest-neighbor algs
+// Xuran Wang
 // Nov 17 2018
 #include<stdlib.h>
 #include<stdio.h>
 #define VAR_SIZE 14
 int train_data_s;// the size of total input train data
 int test_data_s;// the size of total test data
+int class_alg(int q[],int k,int **train_d, int *f_train);
+int d(int q1[],int q2[]);
 
-double mean_value_1(int c, int train_data_s, int **train_d, int *f_train)
-{
-	int mean_1[train_data_s];
-	int count = 0;
-	int s = 0;
-
-	while(int i = 0; i < train_data_s; i++){
-		if(f_train[i] == 0)
-		{
-		mean_1[count] == train_data_s[i][c];
-		count++;
-		}
-	}
-
-	int s = count + 1;
-	int sum = 0;
-	while(int i = 0; i < s; i++){
-	sum = sum + mean_1[i];
-	}
-	return (double) mean/s;
-
-}
 
 int main(int argc, char **argv){
     int i;
@@ -107,9 +87,7 @@ int main(int argc, char **argv){
     }
 
 
-    double mean = 0;
-    mean = mean_value_1(1, train_data_s, train_d, f_train);
-    printf("mean: %f\n", mean);
+
 
 
     int right=0;// record how many data in test dataset has the same value as using the training dataset
@@ -134,5 +112,69 @@ int main(int argc, char **argv){
     free(f_train);
     free(f_test);
 
+}
+
+
+int class_alg(int q[],int k,int **train_d, int *f_train){
+    int c0=0;// count the number of neighbors that has a value of 0
+    int c1=0;// count the numbef of neighbors that has a value of 1
+    int *nei=malloc(sizeof(int)*k);// save the index of nearest k neighbors
+    int i;
+    int j;
+    int last_dist=0;// the last minimum distance
+    // find the smallest distance
+    for(i=0;i<k;i++){
+	int min_d;
+	int index=0;
+	min_d=last_dist;// the minimum distance
+	for(j=0;j<train_data_s;j++){
+	    int dist=d(q,train_d[j]);
+	    if(dist>last_dist){
+		if(dist<=min_d){
+		    min_d=dist;
+		    index=j;
+		}
+	    }
+	    if(dist==last_dist){// check if we have already add it into nei
+		int x;
+		int isre=0;
+		for(x=0;x<k;x++){
+		    if(nei[x]==j){
+			isre=1;
+		    }
+		}
+		if(isre==0){
+		    index=j;
+		}
+	    }
+	}
+	nei[i]=index;
+    }
+
+    for(i=0;i<k;i++){
+	if(f_train[i]==0){
+	    c0++;
+	}
+	else{
+	    c1++;
+	}
+    }
+
+    if(c0>c1){
+	return 0;
+    }
+    else{
+	return 1;
+    }
+}
+
+
+int d(int q1[], int q2[]){// this function calculate the distance between two points
+    int i;
+    int sum=0;
+    for(i=0;i<VAR_SIZE;i++){
+	sum=sum+(q1[i]-q2[i])*(q1[i]-q2[i]);
+    }
+    return sum;
 }
 
