@@ -84,7 +84,7 @@ double prob(double mean, double s, double v){
     double p;
     //if the standard deviation is 0,return 1 because this column will not funciont 
     if(s == 0)
-	return 1;
+	s = SMALL;
 
     p =  (1/sqrt(2*M_PI*(s*s)))*exp((-(v-mean)*(v-mean))/(2*(s*s)));
     return p;
