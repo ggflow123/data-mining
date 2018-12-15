@@ -21,7 +21,7 @@ This is for 2018 fall semester cs241 final project: Data Mining
 ## Makefile
 - Makefile uses gccx instead of gcc because we are working in clyde. If you want to run it locally, gccx is simply
 - gcc -g -pedantic -std=c99 -Wall -Wextra 
--Also, for bayes.c, keep the -lm flag. You want that to compile bayes.c because bayes.c contains math.h
+- Also, for bayes.c, keep the -lm flag. You want that to compile bayes.c because bayes.c contains math.h
 
 ### NEED further modification about
 - Validation
