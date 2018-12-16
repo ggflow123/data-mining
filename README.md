@@ -9,7 +9,7 @@ This is for 2018 fall semester cs241 final project: Data Mining
 - They are saved in the adult_edit.csv
 - The 15th value in the data file is the function value
 
-##convertDiscreteSplit.py
+## convertDiscreteSplit.py
 - Have all the functionalities of convertDiscrete.py
 - split the orignial file into train and test data set
 - usage: python convertDiscreteSplit.py filename trainingPerc seed
