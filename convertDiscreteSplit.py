@@ -32,17 +32,17 @@ def findDiscrete(rows,cont):
     return discrete
 
 def main():
-    trainingPerc = int(sys.argv[2])
-    seed = float(sys.argv[3])
+    trainingPerc = sys.argv[2]
+    seed = sys.argv[3]
     datafile=sys.argv[1]
     with open(datafile,"r",encoding="utf-8") as file:
         reader=csv.reader(file)
         rows=list(reader)
     length = len(rows)
     indices = list(range(length))
-    random.seed(seed)
+    random.seed(int(seed))
     random.shuffle(indices)
-    trainingElement = (length * trainingPerc) // 1
+    trainingElement = (length * float(trainingPerc)) // 1
     cont = findContinuous(rows)
     discrete = findDiscrete(rows,cont)
     for col in range(len(rows[0])):
@@ -50,8 +50,8 @@ def main():
             continue
         for row in range(len(rows)):
             rows[row][col]=discrete[col].index(rows[row][col])
-    datafile_train=datafile.split('.')[0] + '_train.csv'
-    datafile_test=datafile.split('.')[0] + '_test.csv'
+    datafile_train=datafile.split('.')[0] + '_trainP' + trainingPerc + '_seed' + seed + '_train.csv'
+    datafile_test=datafile.split('.')[0] + '_trainP' + trainingPerc + '_seed' + seed + '_test.csv'
     with open(datafile_train,mode='w') as dftr, open(datafile_test,mode='w') as dfte: #datafile_edit
         dftr_writer=csv.writer(dftr,delimiter=',',lineterminator='\n')
         dfte_writer=csv.writer(dfte,delimiter=',',lineterminator='\n')
