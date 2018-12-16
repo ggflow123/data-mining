@@ -1,5 +1,6 @@
 import csv
 import random
+import sys
 def findContinuous(rows):
     length = len(rows[0])
     for row in rows:
@@ -31,9 +32,9 @@ def findDiscrete(rows,cont):
     return discrete
 
 def main():
-    trainingPerc = argv[2]
-    seed = argv[3]
-    datafile=argv[1]
+    trainingPerc = float(sys.argv[2])
+    seed = float(sys.argv[3])
+    datafile=sys.argv[1]
     with open(datafile,"r",encoding="utf-8") as file:
         reader=csv.reader(file)
         rows=list(reader)
@@ -41,6 +42,7 @@ def main():
     indices = list(range(length))
     random.seed(seed)
     random.shuffle(indices)
+    print((trainingPerc * length)//1)
     trainingElement = (length * trainingPerc) // 1
     cont = findContinuous(rows)
     discrete = findDiscrete(rows,cont)
