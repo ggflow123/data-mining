@@ -119,8 +119,29 @@ int class_alg(int q[],int k,int **train_d, int *f_train){
     int c0=0;// count the number of neighbors that has a value of 0
     int c1=0;// count the numbef of neighbors that has a value of 1
     int *nei=malloc(sizeof(int)*k);// save the index of nearest k neighbors
+    int *nv=malloc(sizeof(int)*k);// save the value of nei in 1st column
+
+
     int i;
     int j;
+    for(i=0;i<k;i++){
+	int min_d=d(q,train_d[0]);
+	int index;// the index of min
+	for(j=0;j<train_data_s;j++){
+	    int dist=d(q,train_d[j]);
+	    if(dist<min_d){
+		min_d=dist;
+		index=j;
+	    }
+	}
+	nei[i]=index;
+	nv[i]=train_d[index][0];
+	train_d[index][0]=100000;
+    }
+    for(i=0;i<k;i++){
+	train_d[nei[i]][0]=nv[i];
+    }
+    /*
     int last_dist=0;// the last minimum distance
     // find the smallest distance
     for(i=0;i<k;i++){
@@ -145,20 +166,27 @@ int class_alg(int q[],int k,int **train_d, int *f_train){
 		}
 		if(isre==0){
 		    index=j;
+		    min_d=dist;
+		    break;
 		}
 	    }
 	}
+	last_dist=min_d;
 	nei[i]=index;
     }
+    */
 
-    for(i=0;i<k;i++){
-	if(f_train[i]==0){
+
+    for(i=0;i<k;i++){// count which there are more 0s or more 1s
+	printf("%d\n",nei[i]);
+	if(f_train[nei[i]]==0){
 	    c0++;
 	}
 	else{
 	    c1++;
 	}
     }
+    printf("******\n");
 
     if(c0>c1){
 	return 0;
