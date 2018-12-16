@@ -32,7 +32,7 @@ def findDiscrete(rows,cont):
     return discrete
 
 def main():
-    trainingPerc = float(sys.argv[2])
+    trainingPerc = int(sys.argv[2])
     seed = float(sys.argv[3])
     datafile=sys.argv[1]
     with open(datafile,"r",encoding="utf-8") as file:
@@ -42,7 +42,6 @@ def main():
     indices = list(range(length))
     random.seed(seed)
     random.shuffle(indices)
-    print((trainingPerc * length)//1)
     trainingElement = (length * trainingPerc) // 1
     cont = findContinuous(rows)
     discrete = findDiscrete(rows,cont)
