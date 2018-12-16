@@ -31,8 +31,8 @@ def findDiscrete(rows,cont):
     return discrete
 
 def main():
-    trainingPerc = 0.8
-    seed = 3706868
+    trainingPerc = argv[2]
+    seed = argv[3]
     datafile=argv[1]
     with open(datafile,"r",encoding="utf-8") as file:
         reader=csv.reader(file)
