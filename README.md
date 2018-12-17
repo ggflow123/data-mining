@@ -15,11 +15,11 @@ This is for 2018 fall semester cs241 final project: Data Mining
 - usage: python convertDiscreteSplit.py filename trainingPerc seed
 - (these parameters are mandetory or the program will fail. I think we need them to be filled out every time so I just assume that.)
 ## knn.c
-- This program use K-nearest-neighbors algs to find the value of a query.
+- This program use K-nearest-neighbors algs to check the overall acuracy.
 - ./knn &lt;train data file&gt; &lt;train data size&gt; &lt;test data file&gt; &lt;test data size&gt; &lt;k value&gt;
 
 ## bayes.c
-- This program use Naïve Bayes algorithm to find the value of a query.
+- This program use Naïve Bayes algorithm to check the overall acuracy.
 - Usage: this program assumes five arguments in the command line!
 - ./bayes  &lt;train data file&gt; &lt;train data size&gt; &lt;test data file&gt; &lt;test data size&gt;  
 

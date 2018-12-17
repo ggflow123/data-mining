@@ -79,7 +79,7 @@ int main(int argc, char **argv){
     // deal with test data
     for(i=0;i<test_data_s;i++){
 	for(j=0;j<VAR_SIZE;j++){
-	    fscanf(fte,"%d, ",test_d[i]+j);
+	    fscanf(fte,"%d,",test_d[i]+j);
 	    //printf("%d ", *(test_d[i]+j));
 	}
 	fscanf(fte,"%d",f_test+i);
@@ -178,7 +178,6 @@ int class_alg(int q[],int k,int **train_d, int *f_train){
 
 
     for(i=0;i<k;i++){// count which there are more 0s or more 1s
-	printf("%d\n",nei[i]);
 	if(f_train[nei[i]]==0){
 	    c0++;
 	}
@@ -186,7 +185,6 @@ int class_alg(int q[],int k,int **train_d, int *f_train){
 	    c1++;
 	}
     }
-    printf("******\n");
 
     if(c0>c1){
 	return 0;
